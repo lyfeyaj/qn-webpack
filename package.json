@@ -1,0 +1,28 @@
+{
+  "name": "qn-webpack",
+  "version": "1.0.0",
+  "description": "Qiniu webpack plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyfeyaj/qn-webpack.git"
+  },
+  "keywords": [
+    "qiniu",
+    "webpack",
+    "plugin"
+  ],
+  "author": "Felix Liu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lyfeyaj/qn-webpack/issues"
+  },
+  "homepage": "https://github.com/lyfeyaj/qn-webpack#readme",
+  "dependencies": {
+    "ora": "^0.3.0",
+    "qiniu": "^6.1.13"
+  }
+}
