@@ -48,6 +48,12 @@ module.exports = {
 }
 ```
 
+## 效果图
+
+无图无真相 ^\_\^
+
+![Preview](preview.png)
+
 ## License
 
 (The MIT License)
