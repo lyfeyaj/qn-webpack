@@ -4,6 +4,11 @@ const qiniu = require('qiniu');
 const path = require('path');
 const ora = require('ora');
 
+const tip = (uploaded, total) => {
+  let percentage = Math.round(uploaded / total * 100);
+  return `Uploading to Qiniu CDN: ${percentage}% ${uploaded}/${total} files uploaded`;
+};
+
 module.exports = class QiniuPlugin {
   constructor(options) {
     this.options = Object.assign({}, options);
@@ -30,7 +35,7 @@ module.exports = class QiniuPlugin {
       // eslint-disable-next-line no-console
       console.log('\n');
       let spinner = ora({
-        text: `Uploading to Qiniu CDN: 0% 0/${totalFiles} modules uploaded`,
+        text: tip(0, totalFiles),
         color: 'green'
       }).start();
 
@@ -52,8 +57,9 @@ module.exports = class QiniuPlugin {
         let promise = new Promise((resolve, reject) => {
           let begin = Date.now();
           qiniu.io.putFile(token, key, file.existsAt, extra, function (err, ret) {
+
             uploadedFiles++;
-            spinner.text = `Uploading to Qiniu: ${Math.round(uploadedFiles / totalFiles * 100)}% ${uploadedFiles}/${totalFiles} modules uploaded`;
+            spinner.text = tip(uploadedFiles, totalFiles);
 
             if (err) return reject(err);
             ret.duration = Date.now() - begin;
