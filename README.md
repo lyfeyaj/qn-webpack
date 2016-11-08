@@ -31,13 +31,13 @@ const qiniuPlugin = new QiniuPlugin({
   accessKey: 'my-access-key',
   secretKey: 'my-secret-key',
   bucket: 'my-bucket',
-  path: '[hash]'
+  path: '[hash]/'
 });
 
 // Webpack 的配置
 module.exports = {
  output: {
-    // 此处为七牛提供的域名(http://7xqhak.com1.z0.glb.clouddn.com) 加上 path([hash])
+    // 此处为七牛提供的域名(http://7xqhak.com1.z0.glb.clouddn.com) 加上 path([hash]/)
     publicPath: "http://7xqhak.com1.z0.glb.clouddn.com/[hash]/"
     // ...
  },
