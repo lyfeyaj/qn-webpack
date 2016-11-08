@@ -9,12 +9,9 @@ Qiniu Webpack Plugin
 npm install qn-webpack --save-dev
 ```
 
-## 引入
-```
-const QiniuPlugin = require('qn-webpack');
-```
+## 使用方法
 
-## 配置
+支持的配置项:
 
 + `accessKey` 七牛 AccessKey
 + `secretKey` 七牛 SecretKey
@@ -25,6 +22,8 @@ const QiniuPlugin = require('qn-webpack');
 ***注: Webpack 的 `output.publicPath` 要指向七牛云（或自定义的）域名地址***
 
 ```js
+// 引入
+const QiniuPlugin = require('qn-webpack');
 
 // 配置 Plugin
 const qiniuPlugin = new QiniuPlugin({
