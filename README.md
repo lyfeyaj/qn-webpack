@@ -26,7 +26,7 @@ const QiniuPlugin = require('qn-plugin');
 
 ```js
 
-// 这里配置 Plugin
+// 配置 Plugin
 const qiniuPlugin = new QiniuPlugin({
   accessKey: 'my-access-key',
   secretKey: 'my-secret-key',
@@ -41,7 +41,7 @@ module.exports = {
     publicPath: "http://7xqhak.com1.z0.glb.clouddn.com/[hash]/"
     // ...
  },
- plugins:[
+ plugins: [
    qiniuPlugin
    // ...
  ]
