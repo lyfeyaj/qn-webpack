@@ -11,7 +11,7 @@ npm install qn-webpack --save-dev
 
 ## 引入
 ```
-const QiniuPlugin = require('qn-plugin');
+const QiniuPlugin = require('qn-webpack');
 ```
 
 ## 配置
