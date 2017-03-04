@@ -1,6 +1,6 @@
 {
   "name": "qn-webpack",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Qiniu webpack plugin",
   "main": "index.js",
   "scripts": {
