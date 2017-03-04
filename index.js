@@ -50,7 +50,7 @@ module.exports = class QiniuPlugin {
         let file = assets[fileName] || {};
         if (!file.emitted) return;
 
-        let key = path.join(uploadPath, fileName);
+        let key = path.posix.join(uploadPath, fileName);
         let token = new qiniu.rs.PutPolicy(`${bucket}:${key}`).token();
         let extra = new qiniu.io.PutExtra();
 
