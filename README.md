@@ -16,8 +16,8 @@ npm install qn-webpack --save-dev
 + `accessKey` 七牛 AccessKey
 + `secretKey` 七牛 SecretKey
 + `bucket` 七牛存储对象名称
-+ `autoZone` 是否自动选择上传域名节点, 默认为 true
-+ `path` 存储路径, 默认为 `[hash]`, 也可以指定 hash 长度, 如: [hash:8]
++ `autoZone` 是否自动选择上传域名节点, 默认为 `true`
++ `path` 存储路径, 默认为 `[hash]`, 也可以指定 hash 长度, 如: `[hash:8]`
 + `exclude` 排除特定文件, 正则表达式, 如: `/index\.html$/`
 
 ***注: Webpack 的 `output.publicPath` 要指向七牛云（或自定义的）域名地址***
