@@ -81,6 +81,14 @@ module.exports = class QiniuPlugin {
           this.options.exclude.test(fileName)
         ) return false;
 
+        // Check included files
+        if (
+          this.options.include &&
+          this.options.include instanceof RegExp
+        ) {
+          return this.options.include.test(fileName);
+        }
+
         return true;
       });
 
