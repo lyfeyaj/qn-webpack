@@ -3,6 +3,7 @@
 const qiniu = require('qiniu');
 const path = require('path');
 const ora = require('ora');
+const isRegExp = require('lodash.isregexp');
 
 // Contants
 const REGEXP_HASH = /\[hash(?::(\d+))?\]/gi;
@@ -51,6 +52,8 @@ module.exports = class QiniuPlugin {
       let hash = compilation.hash;
       let bucket = this.options.bucket;
       let uploadPath = this.options.path || '[hash]';
+      let exclude = isRegExp(this.options.exclude) && this.options.exclude;
+      let include = isRegExp(this.options.include) && this.options.include;
 
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
@@ -75,19 +78,10 @@ module.exports = class QiniuPlugin {
         if (!file.emitted) return false;
 
         // Check excluced files
-        if (
-          this.options.exclude &&
-          this.options.exclude instanceof RegExp &&
-          this.options.exclude.test(fileName)
-        ) return false;
+        if (exclude && exclude.test(fileName)) return false;
 
         // Check included files
-        if (
-          this.options.include &&
-          this.options.include instanceof RegExp
-        ) {
-          return this.options.include.test(fileName);
-        }
+        if (include) return include.test(fileName);
 
         return true;
       });
