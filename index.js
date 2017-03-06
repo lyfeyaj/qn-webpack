@@ -5,7 +5,7 @@ const path = require('path');
 const ora = require('ora');
 const isRegExp = require('lodash.isregexp');
 
-// Contants
+// Constants
 const REGEXP_HASH = /\[hash(?::(\d+))?\]/gi;
 
 // Uploading progress tip
