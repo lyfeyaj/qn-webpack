@@ -54,13 +54,13 @@ module.exports = class QiniuPlugin {
       let uploadPath = this.options.path || '[hash]';
       let exclude = isRegExp(this.options.exclude) && this.options.exclude;
       let include = isRegExp(this.options.include) && this.options.include;
+      let batch = this.options.batch || 50;
 
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
       let filesNames = Object.keys(assets);
       let totalFiles = 0;
       let uploadedFiles = 0;
-      let promises = [];
 
       // Mark finished
       let _finish = (err) => {
@@ -95,14 +95,15 @@ module.exports = class QiniuPlugin {
         color: 'green'
       }).start();
 
-      filesNames.map(fileName => {
+      // Perform upload to qiniu
+      const performUpload =function(fileName) {
         let file = assets[fileName] || {};
 
         let key = path.posix.join(uploadPath, fileName);
         let token = new qiniu.rs.PutPolicy(`${bucket}:${key}`).token();
         let extra = new qiniu.io.PutExtra();
 
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
           let begin = Date.now();
           qiniu.io.putFile(token, key, file.existsAt, extra, function (err, ret) {
 
@@ -114,11 +115,29 @@ module.exports = class QiniuPlugin {
             resolve(ret);
           });
         });
+      };
 
-        promises.push(promise);
-      });
+      // Execute stack according to `batch` option
+      const execStack = function(err) {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.log('\n');
+          return Promise.reject(err);
+        }
 
-      Promise.all(promises).then(() => _finish()).catch(_finish);
+        // Get 50 files
+        let _files = filesNames.splice(0, batch);
+
+        if (_files.length) {
+          return Promise.all(
+            _files.map(performUpload)
+          ).then(() => execStack(), execStack);
+        } else {
+          return Promise.resolve();
+        }
+      };
+
+      execStack().then(() => _finish(), _finish);
     });
   }
 };

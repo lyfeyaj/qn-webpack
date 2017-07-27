@@ -20,6 +20,7 @@ npm install qn-webpack --save-dev
 + `path` 存储路径， 默认为 `[hash]`，也可以指定 hash 长度，如: `[hash:8]`
 + `exclude` 可选，排除特定文件，正则表达式，如: `/index\.html$/`
 + `include` 可选，指定要上传的文件，正则表达式，如: `/app\.js$/`
++ `batch` 可选, 批量上传文件并发数, 默认 50
 
 ***注: Webpack 的 `output.publicPath` 要指向七牛云（或自定义的）域名地址***
 
