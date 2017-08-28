@@ -40,9 +40,6 @@ const getReplacer = (value, allowEmpty) => {
 module.exports = class QiniuPlugin {
   constructor(options) {
     this.options = Object.assign({}, options);
-    qiniu.conf.ACCESS_KEY = this.options.accessKey;
-    qiniu.conf.SECRET_KEY = this.options.secretKey;
-    qiniu.conf.AUTOZONE = options.autoZone !== false;
   }
 
   apply(compiler) {
@@ -50,11 +47,15 @@ module.exports = class QiniuPlugin {
 
       let assets = compilation.assets;
       let hash = compilation.hash;
-      let bucket = this.options.bucket;
       let uploadPath = this.options.path || '[hash]';
       let exclude = isRegExp(this.options.exclude) && this.options.exclude;
       let include = isRegExp(this.options.include) && this.options.include;
       let batch = this.options.batch || 50;
+
+      let mac = new qiniu.auth.digest.Mac(this.options.accessKey, this.options.secretKey);
+      let putPolicy = new qiniu.rs.PutPolicy({ scope: this.options.bucket });
+      let uploadToken = putPolicy.uploadToken(mac);
+      let qiniuConfig = new qiniu.conf.Config();
 
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
@@ -98,22 +99,20 @@ module.exports = class QiniuPlugin {
       // Perform upload to qiniu
       const performUpload =function(fileName) {
         let file = assets[fileName] || {};
-
+        let formUploader = new qiniu.form_up.FormUploader(qiniuConfig);
+        let putExtra = new qiniu.form_up.PutExtra();
         let key = path.posix.join(uploadPath, fileName);
-        let token = new qiniu.rs.PutPolicy(`${bucket}:${key}`).token();
-        let extra = new qiniu.io.PutExtra();
 
         return new Promise((resolve, reject) => {
           let begin = Date.now();
-          qiniu.io.putFile(token, key, file.existsAt, extra, function (err, ret) {
-
+          formUploader.putFile(uploadToken, key, file.existsAt, putExtra, function(respErr, respBody, respInfo) {
             uploadedFiles++;
             spinner.text = tip(uploadedFiles, totalFiles);
 
-            if (err) return reject(err);
-            ret.duration = Date.now() - begin;
-            resolve(ret);
-          });
+            if (respErr) return reject(respErr);
+            respBody.duration = Date.now() - begin;
+            resolve(respBody);
+          })
         });
       };
 
