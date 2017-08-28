@@ -54,17 +54,8 @@ module.exports = class QiniuPlugin {
       let mac = new qiniu.auth.digest.Mac(this.options.accessKey, this.options.secretKey);
       let qiniuConfig = new qiniu.conf.Config();
       let bucket = this.options.bucket;
-      // 机房：华东、华北、华南、北美
-      let zones = {
-        'z0': qiniu.zone.Zone_z0,
-        'z1': qiniu.zone.Zone_z1,
-        'z2': qiniu.zone.Zone_z2,
-        'na0': qiniu.zone.Zone_na0
-      };
       let zone = this.options.zone;
-      if (Object.keys(zones).indexOf(zone) > -1) {
-        qiniuConfig.zone = zones[zone];
-      }
+      if (zone) qiniuConfig.zone = qiniu.zone[zone];
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
       let filesNames = Object.keys(assets);

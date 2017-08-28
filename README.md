@@ -20,7 +20,7 @@ npm install qn-webpack --save-dev
 + `exclude` 可选，排除特定文件，正则表达式，如: `/index\.html$/`
 + `include` 可选，指定要上传的文件，正则表达式，如: `/app\.js$/`
 + `batch` 可选，批量上传文件并发数，默认 50
-+ `zone` 可选，存储在七牛的机房（华东 `z0`、华北 `z1`、华南 `z2`、北美 `na0`）
++ `zone` 可选，存储在七牛的机房（华东 `Zone_z0`、华北 `Zone_z1`、华南 `Zone_z2`、北美 `Zone_na0`）
 
 ***注: Webpack 的 `output.publicPath` 要指向七牛云（或自定义的）域名地址***
 
