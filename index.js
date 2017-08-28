@@ -54,8 +54,8 @@ module.exports = class QiniuPlugin {
       let mac = new qiniu.auth.digest.Mac(this.options.accessKey, this.options.secretKey);
       let qiniuConfig = new qiniu.conf.Config();
       let bucket = this.options.bucket;
-      let zone = this.options.zone;
-      if (zone) qiniuConfig.zone = qiniu.zone[zone];
+      let zone = qiniu.zone[this.options.zone];
+      if (zone) qiniuConfig.zone = zone;
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
       let filesNames = Object.keys(assets);
