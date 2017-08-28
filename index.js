@@ -106,14 +106,14 @@ module.exports = class QiniuPlugin {
 
         return new Promise((resolve, reject) => {
           let begin = Date.now();
-          formUploader.putFile(uploadToken, key, file.existsAt, putExtra, function(respErr, respBody, respInfo) {
+          formUploader.putFile(uploadToken, key, file.existsAt, putExtra, function(err, body) {
             uploadedFiles++;
             spinner.text = tip(uploadedFiles, totalFiles);
 
-            if (respErr) return reject(respErr);
-            respBody.duration = Date.now() - begin;
-            resolve(respBody);
-          })
+            if (err) return reject(err);
+            body.duration = Date.now() - begin;
+            resolve(body);
+          });
         });
       };
 
