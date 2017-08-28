@@ -51,12 +51,20 @@ module.exports = class QiniuPlugin {
       let exclude = isRegExp(this.options.exclude) && this.options.exclude;
       let include = isRegExp(this.options.include) && this.options.include;
       let batch = this.options.batch || 50;
-
       let mac = new qiniu.auth.digest.Mac(this.options.accessKey, this.options.secretKey);
-      let putPolicy = new qiniu.rs.PutPolicy({ scope: this.options.bucket });
-      let uploadToken = putPolicy.uploadToken(mac);
       let qiniuConfig = new qiniu.conf.Config();
-
+      let bucket = this.options.bucket;
+      // 机房：华东、华北、华南、北美
+      let zones = {
+        'z0': qiniu.zone.Zone_z0,
+        'z1': qiniu.zone.Zone_z1,
+        'z2': qiniu.zone.Zone_z2,
+        'na0': qiniu.zone.Zone_na0
+      };
+      let zone = this.options.zone;
+      if (Object.keys(zones).indexOf(zone) > -1) {
+        qiniuConfig.zone = zones[zone];
+      }
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
       let filesNames = Object.keys(assets);
@@ -99,9 +107,11 @@ module.exports = class QiniuPlugin {
       // Perform upload to qiniu
       const performUpload =function(fileName) {
         let file = assets[fileName] || {};
+        let key = path.posix.join(uploadPath, fileName);
+        let putPolicy = new qiniu.rs.PutPolicy({ scope: bucket + ':' + key });
+        let uploadToken = putPolicy.uploadToken(mac);
         let formUploader = new qiniu.form_up.FormUploader(qiniuConfig);
         let putExtra = new qiniu.form_up.PutExtra();
-        let key = path.posix.join(uploadPath, fileName);
 
         return new Promise((resolve, reject) => {
           let begin = Date.now();
