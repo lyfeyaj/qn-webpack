@@ -125,7 +125,7 @@ module.exports = class QiniuPlugin {
           return Promise.reject(err);
         }
 
-        // Get 50 files
+        // Get 20 files
         let _files = filesNames.splice(0, batch);
 
         if (_files.length) {
