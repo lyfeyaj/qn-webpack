@@ -3,6 +3,10 @@ Qiniu Webpack Plugin
 
 > 上传 Webpack Assets 至 七牛 CDN
 
+## 前提
+
+需要 Node 版本在 v4.0 以上
+
 ## 安装
 
 ```sh
