@@ -48,6 +48,9 @@ module.exports = class QiniuPlugin {
       let assets = compilation.assets;
       let hash = compilation.hash;
       let uploadPath = this.options.path || '[hash]';
+      if (this.options.path === '/'){
+         uploadPath = "";
+      }
       let exclude = isRegExp(this.options.exclude) && this.options.exclude;
       let include = isRegExp(this.options.include) && this.options.include;
       let batch = this.options.batch || 20;
