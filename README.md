@@ -10,7 +10,11 @@ Qiniu Webpack Plugin
 ## 安装
 
 ```sh
-npm install qn-webpack --save-dev
+# For webpack 4
+npm i -D qn-webpack@2.0.0
+
+# For webpack <= 3
+npm i -D qn-webpack@1.1.3
 ```
 
 ## 使用方法
@@ -60,6 +64,10 @@ module.exports = {
 无图无真相 ^\_\^
 
 ![Preview](preview.png)
+
+## TODOs
+
+1. 上传失败重试机制
 
 ## License
 
