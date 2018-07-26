@@ -5,12 +5,12 @@ Qiniu Webpack Plugin
 
 ## 前提
 
-需要 Node 版本在 v4.0 以上
+需要 Node 版本在 v4.0 以上，此版本支持 webpack <= 3
 
 ## 安装
 
 ```sh
-npm install qn-webpack --save-dev
+npm install qn-webpack@1.1.3 --save-dev
 ```
 
 ## 使用方法
