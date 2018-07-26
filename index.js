@@ -46,7 +46,7 @@ module.exports = class QiniuPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.afterEmit.tapAsync((compilation, callback) => {
+    compiler.hooks.afterEmit.tapAsync('QiniuWebpackPlugin', (compilation, callback) => {
 
       let assets = compilation.assets;
       let hash = compilation.hash;
