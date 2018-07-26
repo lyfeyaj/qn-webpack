@@ -11,7 +11,7 @@ Qiniu Webpack Plugin
 
 ```sh
 # For webpack 4
-npm i -D qn-webpack@2.0.0
+npm i -D qn-webpack@2.0.1
 
 # For webpack <= 3
 npm i -D qn-webpack@1.1.3
