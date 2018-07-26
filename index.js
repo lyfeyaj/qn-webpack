@@ -4,6 +4,7 @@ const qiniu = require('qiniu');
 const path = require('path');
 const ora = require('ora');
 const isRegExp = require('lodash.isregexp');
+const isString = require('lodash.isstring');
 
 // Constants
 const REGEXP_HASH = /\[hash(?::(\d+))?\]/gi;
@@ -40,6 +41,8 @@ const getReplacer = (value, allowEmpty) => {
 module.exports = class QiniuPlugin {
   constructor(options) {
     this.options = Object.assign({}, options);
+    this.options.path = this.options.path == null ? '[hash]' : this.options.path;
+    if (!isString(this.options.path)) throw new Error('qn-webpack plugin: path is invalid');
   }
 
   apply(compiler) {
@@ -47,7 +50,6 @@ module.exports = class QiniuPlugin {
 
       let assets = compilation.assets;
       let hash = compilation.hash;
-      let uploadPath = this.options.path || '[hash]';
       let exclude = isRegExp(this.options.exclude) && this.options.exclude;
       let include = isRegExp(this.options.include) && this.options.include;
       let batch = this.options.batch || 20;
@@ -56,6 +58,7 @@ module.exports = class QiniuPlugin {
       let bucket = this.options.bucket;
       let zone = qiniu.zone[this.options.zone];
       if (zone) qiniuConfig.zone = zone;
+      let uploadPath = this.options.path;
       uploadPath = uploadPath.replace(REGEXP_HASH, withHashLength(getReplacer(hash)));
 
       let filesNames = Object.keys(assets);
@@ -125,7 +128,7 @@ module.exports = class QiniuPlugin {
           return Promise.reject(err);
         }
 
-        // Get 20 files
+        // Get batch files
         let _files = filesNames.splice(0, batch);
 
         if (_files.length) {
