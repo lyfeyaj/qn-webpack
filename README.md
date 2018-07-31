@@ -10,11 +10,7 @@ Qiniu Webpack Plugin
 ## 安装
 
 ```sh
-# For webpack 4
-npm i -D qn-webpack@2.0.1
-
-# For webpack <= 3
-npm i -D qn-webpack@1.1.3
+npm i -D qn-webpack@2.0.2
 ```
 
 ## 使用方法
