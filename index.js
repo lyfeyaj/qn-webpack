@@ -46,7 +46,7 @@ module.exports = class QiniuPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.afterEmit.tapAsync('QiniuWebpackPlugin', (compilation, callback) => {
+    const uploadFiles = (compilation, callback) => {
 
       let assets = compilation.assets;
       let hash = compilation.hash;
@@ -141,6 +141,15 @@ module.exports = class QiniuPlugin {
       };
 
       execStack().then(() => _finish(), _finish);
-    });
+    };
+
+    // For webpack >= 4
+    if (compiler.hooks) {
+      compiler.hooks.afterEmit.tapAsync('QiniuWebpackPlugin', uploadFiles);
+    }
+    // For webpack < 4
+    else {
+      compiler.plugin('after-emit', uploadFiles);
+    }
   }
 };
