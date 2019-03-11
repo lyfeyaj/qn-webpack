@@ -1,6 +1,6 @@
 {
   "name": "qn-webpack",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Qiniu webpack plugin",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "lodash.isregexp": "^4.0.1",
     "lodash.isstring": "^4.0.1",
-    "ora": "^2.1.0",
+    "ora": "^3.2.0",
     "qiniu": "^7.2.1"
   }
 }
