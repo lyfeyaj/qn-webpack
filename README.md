@@ -10,7 +10,7 @@ Qiniu Webpack Plugin
 ## 安装
 
 ```sh
-npm i -D qn-webpack@2.0.2
+npm i -D qn-webpack@2.0.3
 ```
 
 ## 使用方法
@@ -23,6 +23,7 @@ npm i -D qn-webpack@2.0.2
 + `path` 存储路径， 默认为 `[hash]`，也可以指定 hash 长度，如: `[hash:8]`
 + `exclude` 可选，排除特定文件，正则表达式，如: `/index\.html$/`
 + `include` 可选，指定要上传的文件，正则表达式，如: `/app\.js$/`
++ `maxRetryTimes` 可选，最大重试次数，默认 3
 + `batch` 可选，批量上传文件并发数，默认 20
 + `zone` 可选，存储在七牛的机房（华东 `Zone_z0`、华北 `Zone_z1`、华南 `Zone_z2`、北美 `Zone_na0`）
 
@@ -60,10 +61,6 @@ module.exports = {
 无图无真相 ^\_\^
 
 ![Preview](preview.png)
-
-## TODOs
-
-1. 上传失败重试机制
 
 ## License
 
