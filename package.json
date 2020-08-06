@@ -24,7 +24,7 @@
   "dependencies": {
     "lodash.isregexp": "^4.0.1",
     "lodash.isstring": "^4.0.1",
-    "ora": "^3.2.0",
-    "qiniu": "^7.2.1"
+    "ora": "^4.0.5",
+    "qiniu": "^7.3.2"
   }
 }
